@@ -81,7 +81,7 @@
       src: "dnsmasq.conf.j2"
       dest: "/etc/dnsmasq.conf"
       backup: yes
-    register: dnsmasq_conf_result
+    notify: Restart dnsmasq
 
   - name: Add hosts block to /etc/hosts
     blockinfile:
@@ -94,13 +94,7 @@
         {% for host in dnsmasq_etc_hosts %}
         {{ host.address }}  {{ host.name }}.{{ dnsmasq_domain_name }} {{ host.name }}
         {% endfor %}
-    register: dnsmasq_hosts_result
-
-  - name: Restart dnsmasq when the configs change
-    systemd:
-      name: dnsmasq.service
-      state: restarted
-    when: dnsmasq_conf_result is changed or dnsmasq_hosts_result is changed
+    notify: Restart dnsmasq
 
   - name: Start and Enable dnsmasq
     systemd:
