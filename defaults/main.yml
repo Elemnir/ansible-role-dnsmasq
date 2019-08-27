@@ -18,6 +18,8 @@ dnsmasq_etc_hosts: []
 
 dnsmasq_lease_time: "12h"
 
+dnsmasq_dhcp_jumbo_frames: True
+
 dnsmasq_listen_interfaces: []
 #  - "eth0"
 
