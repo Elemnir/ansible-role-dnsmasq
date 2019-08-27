@@ -28,7 +28,12 @@ dhcp-host={% if 'mac' in host %}{{ host.mac }},{% endif -%}
 {% endfor %}
 
 dhcp-authoritative
+
 dhcp-option=tag:nodefroute,option:router
+
+{% if dnsmasq_dhcp_jumbo_frames %}
+dhcp-option=option:mtu,9000
+{% endif %}
 
 {% if dnsmasq_provide_pxe %}
 enable-tftp
