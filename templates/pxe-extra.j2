@@ -3,7 +3,7 @@
 SERIAL 0 115200
 
 # Use color menu
-DEFAULT {{ dnsmasq_pxe_menu_default }}
+DEFAULT {{ item.default | default(dnsmasq_pxe_menu_default) }}
 
 # only show boot prompt if certain key is held down, or caps/scroll is on
 PROMPT 0
@@ -15,7 +15,7 @@ TIMEOUT 300
 TOTALTIMEOUT 600
 
 # Default image if we run out of time
-ONTIMEOUT {{ dnsmasq_pxe_menu_ontimeout }}
+ONTIMEOUT {{ item.ontimeout | default(dnsmasq_pxe_menu_ontimeout) }}
 
 MENU TITLE {{ dnsmasq_pxe_title }}
 
@@ -23,11 +23,11 @@ LABEL BootLocal
     MENU LABEL Boot Local OS
     localboot 0
 
-{% for item in dnsmasq_pxe_menu %}
-LABEL {{ item.name }}
-    MENU LABEL {{ item.label }}
-    KERNEL {{ item.kernel }}
-    {% if 'initrd' in item %}INITRD {{ item.initrd }}{% endif %}{{ '' }}
-    {% if 'append' in item %}APPEND {{ item.append }}{% endif %}
+{% for entry in item.menu %}
+LABEL {{ entry.name }}
+    MENU LABEL {{ entry.label }}
+    KERNEL {{ entry.kernel }}
+    {% if 'initrd' in entry %}INITRD {{ entry.initrd }}{% endif %}{{ '' }}
+    {% if 'append' in entry %}APPEND {{ entry.append }}{% endif %}
 
 {% endfor %}
