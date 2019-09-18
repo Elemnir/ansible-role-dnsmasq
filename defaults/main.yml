@@ -12,10 +12,18 @@ dnsmasq_host_list: []
 #  - { name: host1, mac: aa:bb:cc:dd:ee:ff, address: 10.0.0.101 }
 #  - { name: host2, mac: 11:22:33:44:55:66, address: 10.0.0.102 }
 
+dnsmasq_etc_hosts: []
+#  - { name: mgmt1, address: 10.0.0.1 }
+#  - { name: mgmt2, address: 10.0.0.2 }
+
 dnsmasq_lease_time: "12h"
 
-dnsmasq_listen_interfaces:
-  - "eth0"
+dnsmasq_dhcp_jumbo_frames: True
+
+dnsmasq_listen_interfaces: []
+#  - "eth0"
+
+dnsmasq_authoritative_interface: False
 
 dnsmasq_provide_pxe: False
 
@@ -23,7 +31,9 @@ dnsmasq_tftp_path: "/var/opt/tftpboot"
 
 dnsmasq_pxe_title: "PXE Menu"
 
-dnsmasq_pxe_menu_default: "BootLocal"
+dnsmasq_pxe_menu_default: "menu.c32"
+
+dnsmasq_pxe_menu_ontimeout: "Bootlocal"
 
 dnsmasq_get_tftp_files: []
 #  - url: file:///path/to/a/kernel
@@ -34,3 +44,12 @@ dnsmasq_pxe_menu: []
 #    label: Install CentOS 7.4
 #    kernel: centos/7.4.1708/vmlinuz
 #    append: initrd=centos/7.4.1708/initrd.img ksdevice=bootif ip=dhcp
+
+dnsmasq_extra_pxe_menus: []
+#  - postfix: 0A0000 # 10.0.0.0/24
+#    ontimeout: foo
+#    menu:
+#      - name: centos_7.5
+#        label: Install CentOS 7.5
+#        kernel: centos/7.5/vmlinuz
+#        append: initrd=centos/7.5/initrd.img ksdevice=bootif ip=dhcp
