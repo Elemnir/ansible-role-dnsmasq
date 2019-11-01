@@ -92,7 +92,7 @@
         {% endfor %}
 
         {% for host in dnsmasq_etc_hosts %}
-        {{ host.address }}  {{ host.name }}.{{ dnsmasq_domain_name }} {{ host.name }}
+        {{ host.address }}  {{ host.name }}
         {% endfor %}
     notify: Restart dnsmasq
 
